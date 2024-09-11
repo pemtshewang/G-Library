@@ -36,7 +36,7 @@ const LandingPage = () => {
         )}
       </div>
       <div className="flex justify-center">
-        <Image width={250} height={250} src={"assets/logo.png"} alt="image" />
+        <Image draggable={false} width={250} height={250} src={"assets/logo.png"} alt="image" />
       </div>
       <div className="flex justify-center">
         <GButton setRandomQuote={setRandomQuote}>Start Reading</GButton>

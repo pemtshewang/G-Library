@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Book {
-  id              Int       @id @default(autoincrement())
+  id              Int            @id @default(autoincrement())
   title           String
   author          String
   isbn            String?
@@ -23,12 +23,20 @@ model Book {
   filePath        String
   fileFormat      String
   coverImagePath  String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  userProgress    UserProgress[] // tracks user progress of each book by percentages
+  bookmarks       Bookmark[] // book contain many bookmarks
+  notes           Note[] // book contain many notes
+}
 
-  userProgress UserProgress[]
-  bookmarks    Bookmark[]
-  notes        Note[]
+model Note {
+  id        Int      @id @default(autoincrement())
+  book      Book     @relation(fields: [bookId], references: [id])
+  bookId    Int
+  position  Int
+  content   String
+  createdAt DateTime @default(now())
 }
 
 model UserProgress {
@@ -46,14 +54,5 @@ model Bookmark {
   bookId    Int
   position  Int
   note      String?
-  createdAt DateTime @default(now())
-}
-
-model Note {
-  id        Int      @id @default(autoincrement())
-  book      Book     @relation(fields: [bookId], references: [id])
-  bookId    Int
-  position  Int
-  content   String
   createdAt DateTime @default(now())
 }
